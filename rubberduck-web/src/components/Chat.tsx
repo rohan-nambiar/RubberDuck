@@ -8,7 +8,11 @@ interface Message {
   timestamp: string;
 }
 
-const Chat: React.FC = () => {
+interface ChatProps {
+  username: string;
+}
+
+const Chat: React.FC<ChatProps> = ({ username }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
 
@@ -19,7 +23,7 @@ const Chat: React.FC = () => {
     const newMessage: Message = {
       id: messages.length + 1,
       text: input,
-      sender: 'User',
+      sender: username,
       timestamp: timestamp,
     };
 
@@ -32,6 +36,7 @@ const Chat: React.FC = () => {
   };
 
   const getResponseMessage = async (id: number): Promise<Message> => {
+    // Mock response logic; replace this with an API call in the future
     const responseText = 'testing'; // Replace this with an API call
     const timestamp = new Date().toISOString();
     return {
@@ -54,7 +59,7 @@ const Chat: React.FC = () => {
     <div className="chat-container">
       <div className="messages">
         {messages.map((message) => (
-          <div key={message.id} className={`message ${message.sender === 'User' ? 'user-message' : 'bot-message'}`}>
+          <div key={message.id} className={`message ${message.sender === username ? 'user-message' : 'bot-message'}`}>
             <p>{message.text}</p>
             <small>{message.sender} - {new Date(message.timestamp).toLocaleTimeString()}</small>
             {message.sender === 'Rubber Duck' && (
