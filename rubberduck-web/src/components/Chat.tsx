@@ -12,7 +12,7 @@ const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim() === '') return;
 
     const timestamp = new Date().toISOString();
@@ -25,6 +25,30 @@ const Chat: React.FC = () => {
 
     setMessages([...messages, newMessage]);
     setInput('');
+
+    const responseMessage = await getResponseMessage(messages.length + 2);
+
+    setMessages((prevMessages) => [...prevMessages, responseMessage]);
+  };
+
+  const getResponseMessage = async (id: number): Promise<Message> => {
+    // Mock response logic; replace this with an API call in the future
+    const responseText = 'testing'; // Replace this with an API call
+    const timestamp = new Date().toISOString();
+    return {
+      id: id,
+      text: responseText,
+      sender: 'Rubber Duck',
+      timestamp: timestamp,
+    };
+  };
+
+  const handleThumbsUp = () => {
+    console.log('good response');
+  };
+
+  const handleThumbsDown = () => {
+    console.log('bad response');
   };
 
   return (
@@ -34,6 +58,12 @@ const Chat: React.FC = () => {
           <div key={message.id} className={`message ${message.sender === 'User' ? 'user-message' : 'bot-message'}`}>
             <p>{message.text}</p>
             <small>{message.sender} - {new Date(message.timestamp).toLocaleTimeString()}</small>
+            {message.sender === 'Rubber Duck' && (
+              <div className="feedback">
+                <button onClick={handleThumbsUp}>👍</button>
+                <button onClick={handleThumbsDown}>👎</button>
+              </div>
+            )}
           </div>
         ))}
       </div>
