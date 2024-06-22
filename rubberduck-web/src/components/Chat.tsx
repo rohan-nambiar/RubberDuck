@@ -32,7 +32,6 @@ const Chat: React.FC = () => {
   };
 
   const getResponseMessage = async (id: number): Promise<Message> => {
-    // Mock response logic; replace this with an API call in the future
     const responseText = 'testing'; // Replace this with an API call
     const timestamp = new Date().toISOString();
     return {
