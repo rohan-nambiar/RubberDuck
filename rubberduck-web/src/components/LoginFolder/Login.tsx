@@ -1,10 +1,14 @@
 //create a login component
 import React, { useState } from 'react';
 import './Login.css';
+import SignUp from './SignUp';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showSignUp, setShowSignUp] = React.useState(false);
+
+
 
   const handleLogin = () => {
     if (username.trim() === '' || password.trim() === '') return;
@@ -14,6 +18,10 @@ const Login: React.FC = () => {
         '\nPassword:', password
         );
     };
+
+  const handleSignUp = () => {
+    setShowSignUp(true);
+  }
 
     return (
       <div className="login-container">
@@ -30,6 +38,12 @@ const Login: React.FC = () => {
           placeholder="Password"
         />
         <button onClick={handleLogin}>Login</button>
+        <button onClick={handleSignUp}>Sign Up</button>
+        {showSignUp && <div className="signup-popup">
+          <SignUp
+            setShowSignUp={setShowSignUp}
+            />
+        </div>}
       </div>
     );  
 }

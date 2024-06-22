@@ -23,10 +23,15 @@ const App: React.FC = () => {
       </header>
       <main>
         <Chat />
-        {showLogin && <div className="login-popup">
-          <Login />
-          <button onClick={closeLoginPopup}>Close</button>
-        </div>}
+        {showLogin && (
+          <div className="login-popup" style={{ pointerEvents: "auto" }}>
+            <div className="popup-overlay" />
+            <div className="popup-content">
+              <Login />
+              <button onClick={closeLoginPopup}>Close</button>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
